@@ -33,6 +33,7 @@ io.on('connection', socket => {
 
     connectedUsers[user_id] = socket.id;
 });
+
 app.use((req, res, next) => {
     req.io = io;
     req.connectedUsers = connectedUsers;
