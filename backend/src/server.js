@@ -1,3 +1,5 @@
+require('dotenv/config');
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -12,7 +14,7 @@ const app = express();
 const server = http.Server(app);
 const io = socketio(server);
 
-mongoose.connect('mongodb+srv://omnistack:omnistack@cluster0-rndfj.mongodb.net/week9?retryWrites=true&w=majority', {
+mongoose.connect(process.env.MONGO_URL, {
     useCreateIndex: false,
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -43,4 +45,6 @@ app.use(express.json());
 app.use('/files', express.static(path.resolve(__dirname, '..', 'uploads')));
 app.use(routes);
 
-server.listen(8080);
+server.listen(process.env.PORT, () => {
+    console.log(`Servidor Executando! ... http://localhost:${process.env.PORT}`);
+});
